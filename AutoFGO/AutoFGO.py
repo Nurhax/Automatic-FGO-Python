@@ -4,6 +4,7 @@ import pyautogui as pyg
 import time as tm
 import random as rand
 import threading
+import os
 
 #variabel global dari slider pas milih waver
 slider = 338
@@ -11,13 +12,17 @@ slider = 338
 #var loading boolean
 loading = False
 
+#Dirrectory Automatis
+DirectoryIni = os.path.dirname(os.path.abspath(__file__))
+
 #function nunggu loading bjir
-def tungguLoading():
+def tungguLoading(DirectoryIni):
     loading = True
     while True:
         try:
            while loading:
-            pyg.locateCenterOnScreen('Y:\piton_kode\PersonalProj\AutoFGO\\Loading.jpg', region=(1300,900,632,181), confidence = 0.80)
+            DirectoryIni = DirectoryIni + '\\Loading.jpg'
+            pyg.locateCenterOnScreen(DirectoryIni, region=(1300,900,632,181), confidence = 0.80)
             tungguGlobal()
             print("Masih loading")
         except:
@@ -73,7 +78,7 @@ stamina = int(input("Jumlah AP Saat ini: "))
 
 #(Duluan):
 #Tanya ke user udh masuk ke menu support atau belum, kalau belum mulai dari sini, kalau udah langsung ke code bawah
-def menuFGO():
+def menuFGO(DirectoryIni):
     maw = str(input("Langsung ke menu support? (Y/N): "))
     if maw == "N" or maw == "n" and diam == False:
         print("Mulai dari awal ya!")
@@ -83,7 +88,8 @@ def menuFGO():
         while True:
             try:
                 #klik tombol chaldea gate
-                p1,l1 = pyg.locateCenterOnScreen('AutoFGO\\Gate.jpg', region=(0,0,1856,1920), confidence = 0.7)
+                DirectoryIni = DirectoryIni + '\\Gate.jpg'
+                p1,l1 = pyg.locateCenterOnScreen(DirectoryIni, region=(0,0,1856,1920), confidence = 0.7)
                 click(p1,l1)
                 break
             except:
@@ -97,7 +103,8 @@ def menuFGO():
         while True:
             try:
                 tungguGlobal()
-                dailyX,dailyY = pyg.locateCenterOnScreen('AutoFGO\\Quest.jpg', region=(0,0,1856,1920), confidence = 0.7)
+                DirectoryIni = DirectoryIni + '\\Quest.jpg'
+                dailyX,dailyY = pyg.locateCenterOnScreen(DirectoryIni, region=(0,0,1856,1920), confidence = 0.7)
                 click(dailyX,dailyY)
                 break
             except:
@@ -112,17 +119,18 @@ def menuFGO():
         click(1344,333)
 
 #Main Farming Loop
-def mainLoop(repeat,ulang):
+def mainLoop(repeat,ulang,DirectoryIni):
     while repeat != ulang:
         #balik ke window fgo
         print("Farming Dimulai")
         tungguGlobal()
         #tunggu loadignnya dulu :C
-        tungguLoading()
+        tungguLoading(DirectoryIni)
         #klik icon mage
         while True:
             try:
-                m1,m2 = pyg.locateCenterOnScreen('AutoFGO\\mage.jpg', region=(0,0,1856,1920), confidence = 0.8)
+                DirectoryIni = DirectoryIni + '\\Mage.jpg'
+                m1,m2 = pyg.locateCenterOnScreen(DirectoryIni, region=(0,0,1856,1920), confidence = 0.8)
                 tungguGlobal()
                 tungguGlobal()
                 tungguGlobal()
@@ -137,7 +145,8 @@ def mainLoop(repeat,ulang):
             try:
                 #ngecek apakah ada waver di screenshot tersebut?
                 tungguGlobal()
-                cekWaver1X,cekWaver1Y = pyg.locateCenterOnScreen('AutoFGO\\Waver2.jpg', region=(0,0,1856,1920), confidence = 0.8)
+                DirectoryIni = DirectoryIni + '\\Waver2.jpg'
+                cekWaver1X,cekWaver1Y = pyg.locateCenterOnScreen(DirectoryIni, region=(0,0,1856,1920), confidence = 0.8)
                 tungguGlobal()
                 click(cekWaver1X,cekWaver1Y)
                 #kalo dia gak ada waver
@@ -145,7 +154,8 @@ def mainLoop(repeat,ulang):
             except:
                 try:
                     tungguGlobal()
-                    cekWaver2X,cekWaver2Y = pyg.locateCenterOnScreen('AutoFGO\\Waver1.jpg', region=(0,0,1856,1920), confidence = 0.8)
+                    DirectoryIni = DirectoryIni + '\\Waver1.jpg'
+                    cekWaver2X,cekWaver2Y = pyg.locateCenterOnScreen(DirectoryIni, region=(0,0,1856,1920), confidence = 0.8)
                     tungguGlobal()
                     click(cekWaver2X,cekWaver2Y)
                     break
@@ -168,7 +178,8 @@ def mainLoop(repeat,ulang):
         tungguGlobal()
         while True:
             try:
-                s1,s2 = pyg.locateCenterOnScreen('AutoFGO\\Utama.jpg', region=(0,0,1856,1920), confidence = 0.9)
+                DirectoryIni = DirectoryIni + '\\Utama.jpg'
+                s1,s2 = pyg.locateCenterOnScreen(DirectoryIni, region=(0,0,1856,1920), confidence = 0.9)
                 click(s1,s2)
                 print("Gasskeun Bang!")
                 break
@@ -191,7 +202,8 @@ def mainLoop(repeat,ulang):
         #4.5 tunggu buat np nya
         while True:
             try:
-                a1,a2 = pyg.locateCenterOnScreen('AutoFGO\\Utama.jpg', region=(0,0,1856,1920), confidence = 0.9)
+                DirectoryIni = DirectoryIni + '\\Utama.jpg'
+                a1,a2 = pyg.locateCenterOnScreen(DirectoryIni, region=(0,0,1856,1920), confidence = 0.9)
                 click(a1,a2)
                 print("Lanjutkeun!")
                 break
@@ -232,7 +244,8 @@ def mainLoop(repeat,ulang):
         #9.5. tunggu sampai NP selesai
         while True:
             try:
-                a1,a2 = pyg.locateCenterOnScreen('AutoFGO\\Utama.jpg', region=(0,0,1856,1920), confidence = 0.8)
+                DirectoryIni = DirectoryIni + '\\Utama.jpg'
+                a1,a2 = pyg.locateCenterOnScreen(DirectoryIni, region=(0,0,1856,1920), confidence = 0.8)
                 click(a1,a2)
                 print("Lanjutkeun!")
                 break
@@ -285,7 +298,8 @@ def mainLoop(repeat,ulang):
         #16. tunggu np sampe selesai
         while True:
             try:
-                x,y = pyg.locateCenterOnScreen('AutoFGO\\Done.jpg', region=(0,0,1856,1920), confidence = 0.8)
+                DirectoryIni = DirectoryIni + '\\Done.jpg'
+                x,y = pyg.locateCenterOnScreen(DirectoryIni, region=(0,0,1856,1920), confidence = 0.8)
                 click(x,y)
                 print("Putaran ke", repeat+1, "sudah selsai.")
                 #17. Klik sekali, klik 2 kali
@@ -310,7 +324,8 @@ def mainLoop(repeat,ulang):
         while True:
             try:
                 #ngecek apakah dia friend atau bukan
-                pyg.locateCenterOnScreen('AutoFGO\\Support.jpg', region=(0,0,1856,1920), confidence = 0.9)
+                DirectoryIni = DirectoryIni + '\\Support.jpg'
+                pyg.locateCenterOnScreen(DirectoryIni, region=(0,0,1856,1920), confidence = 0.9)
                 click(438,915)
                 tungguGlobal()
                 #klik repeat
@@ -339,7 +354,7 @@ def mainLoop(repeat,ulang):
                 break
 
 def mulaiMainLoop():
-    threading.Thread(target= mainLoop, daemon = True, args = ((repeat,),(ulang,))).start()
+    threading.Thread(target= mainLoop, daemon = True, args = ((repeat,),(ulang,),(DirectoryIni,))).start()
 
 def berhenti():
     print("Pencet key z kalau error atau udah selesai")
