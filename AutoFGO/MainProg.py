@@ -1,5 +1,8 @@
 import AutoFGO
 
-AutoFGO.menuFGO()
+#Variabel String Buat FileDirectory
+fileDirectory = ""
+
+AutoFGO.menuFGO(fileDirectory)
 AutoFGO.mulaiMainLoop()
 AutoFGO.berhenti()
