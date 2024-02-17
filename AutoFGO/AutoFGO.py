@@ -6,9 +6,6 @@ import random as rand
 import threading
 import os
 
-#variabel global dari slider pas milih waver
-slider = 338
-
 #var loading boolean
 loading = False
 
@@ -18,12 +15,11 @@ DirectoryIni = os.path.dirname(os.path.abspath(__file__))
 #function nunggu loading bjir
 def tungguLoading(DirectoryIni):
     loading = True
+    LoadingDirectory = DirectoryIni[0] + '\\Loading.jpg'
     while True:
         try:
            while loading:
-            DirectoryIni = DirectoryIni + '\\Loading.jpg'
-            pyg.locateCenterOnScreen(DirectoryIni, region=(1300,900,632,181), confidence = 0.80)
-            tungguGlobal()
+            pyg.locateCenterOnScreen(LoadingDirectory, region=(1300,900,632,181), confidence = 0.9)
             print("Masih loading")
         except:
             print("Udah Gak Loading")
@@ -85,11 +81,11 @@ def menuFGO(DirectoryIni):
         tungguGlobal()
         #ngecek apakah dia di menu utama fgo.
         #Dia nge try buat klik gambar yang ada di menu utama, kalau belum ada dia click tengah layar terus pass
+        GateDirectory = DirectoryIni[0] + '\\Gate.jpg'
         while True:
             try:
                 #klik tombol chaldea gate
-                DirectoryIni = DirectoryIni + '\\Gate.jpg'
-                p1,l1 = pyg.locateCenterOnScreen(DirectoryIni, region=(0,0,1856,1920), confidence = 0.7)
+                p1,l1 = pyg.locateCenterOnScreen(GateDirectory, region=(0,0,1856,1920), confidence = 0.7)
                 click(p1,l1)
                 break
             except:
@@ -100,11 +96,11 @@ def menuFGO(DirectoryIni):
         if stamina < 40:
             staminup()
         #klik tombol daily quest, pake error handling takutnya terkahir kali main buka menu lain.
+        QuestDirectory = DirectoryIni[0] + '\\Quest.jpg'
         while True:
             try:
                 tungguGlobal()
-                DirectoryIni = DirectoryIni + '\\Quest.jpg'
-                dailyX,dailyY = pyg.locateCenterOnScreen(DirectoryIni, region=(0,0,1856,1920), confidence = 0.7)
+                dailyX,dailyY = pyg.locateCenterOnScreen(QuestDirectory, region=(0,0,1856,1920), confidence = 0.7)
                 click(dailyX,dailyY)
                 break
             except:
@@ -120,6 +116,8 @@ def menuFGO(DirectoryIni):
 
 #Main Farming Loop
 def mainLoop(repeat,ulang,DirectoryIni):
+    #variabel local dari slider pas milih waver
+    slider = 338
     while repeat != ulang:
         #balik ke window fgo
         print("Farming Dimulai")
@@ -127,10 +125,10 @@ def mainLoop(repeat,ulang,DirectoryIni):
         #tunggu loadignnya dulu :C
         tungguLoading(DirectoryIni)
         #klik icon mage
+        MageDirectory = DirectoryIni[0] + '\\Mage.jpg'
         while True:
             try:
-                DirectoryIni = DirectoryIni + '\\Mage.jpg'
-                m1,m2 = pyg.locateCenterOnScreen(DirectoryIni, region=(0,0,1856,1920), confidence = 0.8)
+                m1,m2 = pyg.locateCenterOnScreen(MageDirectory, region=(0,0,1856,1920), confidence = 0.7)
                 tungguGlobal()
                 tungguGlobal()
                 tungguGlobal()
@@ -141,12 +139,12 @@ def mainLoop(repeat,ulang,DirectoryIni):
                 pass
     #cari gambar zhuge liang/waver kalau gak ada skrol ke bawah (cek terus sampe bawah, kalo gak ada klik update list)
         pyg.moveTo(1751,338)
+        Waver2Directory = DirectoryIni[0] + '\\Waver2.jpg'
         while True:
             try:
                 #ngecek apakah ada waver di screenshot tersebut?
                 tungguGlobal()
-                DirectoryIni = DirectoryIni + '\\Waver2.jpg'
-                cekWaver1X,cekWaver1Y = pyg.locateCenterOnScreen(DirectoryIni, region=(0,0,1856,1920), confidence = 0.8)
+                cekWaver1X,cekWaver1Y = pyg.locateCenterOnScreen(Waver2Directory, region=(0,0,1856,1920), confidence = 0.8)
                 tungguGlobal()
                 click(cekWaver1X,cekWaver1Y)
                 #kalo dia gak ada waver
@@ -154,8 +152,8 @@ def mainLoop(repeat,ulang,DirectoryIni):
             except:
                 try:
                     tungguGlobal()
-                    DirectoryIni = DirectoryIni + '\\Waver1.jpg'
-                    cekWaver2X,cekWaver2Y = pyg.locateCenterOnScreen(DirectoryIni, region=(0,0,1856,1920), confidence = 0.8)
+                    Waver1Directory = DirectoryIni[0] + '\\Waver1.jpg'
+                    cekWaver2X,cekWaver2Y = pyg.locateCenterOnScreen(Waver1Directory, region=(0,0,1856,1920), confidence = 0.8)
                     tungguGlobal()
                     click(cekWaver2X,cekWaver2Y)
                     break
@@ -171,15 +169,15 @@ def mainLoop(repeat,ulang,DirectoryIni):
                 pass
         slider = 72
         #klik start quest
-        if repeat == 0:
+        if repeat[0] == 0:
             tungguGlobal()
             click(1621,998)
         #ngecek apakah dia udah di battle screen, jika udh lakuin hal berikut:
         tungguGlobal()
+        UtamaDirectory = DirectoryIni[0] + '\\Utama.jpg'
         while True:
             try:
-                DirectoryIni = DirectoryIni + '\\Utama.jpg'
-                s1,s2 = pyg.locateCenterOnScreen(DirectoryIni, region=(0,0,1856,1920), confidence = 0.9)
+                s1,s2 = pyg.locateCenterOnScreen(UtamaDirectory, region=(0,0,1856,1920), confidence = 0.9)
                 click(s1,s2)
                 print("Gasskeun Bang!")
                 break
@@ -202,8 +200,7 @@ def mainLoop(repeat,ulang,DirectoryIni):
         #4.5 tunggu buat np nya
         while True:
             try:
-                DirectoryIni = DirectoryIni + '\\Utama.jpg'
-                a1,a2 = pyg.locateCenterOnScreen(DirectoryIni, region=(0,0,1856,1920), confidence = 0.9)
+                a1,a2 = pyg.locateCenterOnScreen(UtamaDirectory, region=(0,0,1856,1920), confidence = 0.9)
                 click(a1,a2)
                 print("Lanjutkeun!")
                 break
@@ -244,8 +241,7 @@ def mainLoop(repeat,ulang,DirectoryIni):
         #9.5. tunggu sampai NP selesai
         while True:
             try:
-                DirectoryIni = DirectoryIni + '\\Utama.jpg'
-                a1,a2 = pyg.locateCenterOnScreen(DirectoryIni, region=(0,0,1856,1920), confidence = 0.8)
+                a1,a2 = pyg.locateCenterOnScreen(UtamaDirectory, region=(0,0,1856,1920), confidence = 0.8)
                 click(a1,a2)
                 print("Lanjutkeun!")
                 break
@@ -296,10 +292,10 @@ def mainLoop(repeat,ulang,DirectoryIni):
         tungguGlobal()
         pilihkartu()
         #16. tunggu np sampe selesai
+        DoneDirectory = DirectoryIni[0] + '\\Done.jpg'
         while True:
             try:
-                DirectoryIni = DirectoryIni + '\\Done.jpg'
-                x,y = pyg.locateCenterOnScreen(DirectoryIni, region=(0,0,1856,1920), confidence = 0.8)
+                x,y = pyg.locateCenterOnScreen(DoneDirectory, region=(0,0,1856,1920), confidence = 0.7)
                 click(x,y)
                 print("Putaran ke", repeat+1, "sudah selsai.")
                 #17. Klik sekali, klik 2 kali
@@ -317,15 +313,15 @@ def mainLoop(repeat,ulang,DirectoryIni):
                 print("Masih np")
                 pass
     #19. repeat++
-        repeat = repeat + 1
+        repeat[0] = repeat[0] + 1
     #19.5 stamina ngurang 40 poin
         stamina = stamina - 40
     ## Jika supportnya bukan friend
+        SupportDirectory = DirectoryIni[0] + '\\Support.jpg'
         while True:
             try:
                 #ngecek apakah dia friend atau bukan
-                DirectoryIni = DirectoryIni + '\\Support.jpg'
-                pyg.locateCenterOnScreen(DirectoryIni, region=(0,0,1856,1920), confidence = 0.9)
+                pyg.locateCenterOnScreen(SupportDirectory, region=(0,0,1856,1920), confidence = 0.9)
                 click(438,915)
                 tungguGlobal()
                 #klik repeat
@@ -340,17 +336,17 @@ def mainLoop(repeat,ulang,DirectoryIni):
                 break
             except:
                 #20. Klik Repeat
-                if repeat != ulang:
+                if repeat[0] != ulang[0]:
                     tungguGlobal()
                     click(1168,846)
                 ## jika kehabisan stamina:
-                if stamina < 40 and repeat != ulang:
+                if stamina < 40 and repeat[0] != ulang[0]:
                     tungguGlobal()
                     #21. Klik Golden Fruit
                     click(1166,497)
                     #22. Klik Ok
                     tungguGlobal()
-                    click(1134,835)    
+                    click(1134,835)
                 break
 
 def mulaiMainLoop():

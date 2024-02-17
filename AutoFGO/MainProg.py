@@ -1,7 +1,8 @@
 import AutoFGO
 
 #Variabel String Buat FileDirectory
-fileDirectory = ""
+#Wrong logic di AutoFGO.py file directory nya harus set ulang setiap diperlukan
+fileDirectory = ''
 
 AutoFGO.menuFGO(fileDirectory)
 AutoFGO.mulaiMainLoop()
