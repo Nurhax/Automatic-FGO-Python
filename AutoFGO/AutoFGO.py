@@ -75,13 +75,14 @@ stamina = int(input("Jumlah AP Saat ini: "))
 #(Duluan):
 #Tanya ke user udh masuk ke menu support atau belum, kalau belum mulai dari sini, kalau udah langsung ke code bawah
 def menuFGO(DirectoryIni):
+    DirectoryIni = os.path.dirname(os.path.abspath(__file__))
     maw = str(input("Langsung ke menu support? (Y/N): "))
     if maw == "N" or maw == "n" and diam == False:
         print("Mulai dari awal ya!")
         tungguGlobal()
         #ngecek apakah dia di menu utama fgo.
         #Dia nge try buat klik gambar yang ada di menu utama, kalau belum ada dia click tengah layar terus pass
-        GateDirectory = DirectoryIni[0] + '\\Gate.jpg'
+        GateDirectory = DirectoryIni + '\\Gate.jpg'
         while True:
             try:
                 #klik tombol chaldea gate
@@ -96,7 +97,7 @@ def menuFGO(DirectoryIni):
         if stamina < 40:
             staminup()
         #klik tombol daily quest, pake error handling takutnya terkahir kali main buka menu lain.
-        QuestDirectory = DirectoryIni[0] + '\\Quest.jpg'
+        QuestDirectory = DirectoryIni + '\\Quest.jpg'
         while True:
             try:
                 tungguGlobal()
@@ -291,13 +292,21 @@ def mainLoop(repeat,ulang,DirectoryIni):
         #15. klik random 1 - 5
         tungguGlobal()
         pilihkartu()
+        tungguGlobal()
+        click(960,540)
+        tungguGlobal()
+        click(960,540)
+        tungguGlobal()
+        click(960,540)
+        tungguGlobal()
+        click(960,540)
         #16. tunggu np sampe selesai
-        DoneDirectory = DirectoryIni[0] + '\\Done.jpg'
+        VictoryDirectory = DirectoryIni[0] + '\\Done.jpg'
         while True:
             try:
-                x,y = pyg.locateCenterOnScreen(DoneDirectory, region=(0,0,1856,1920), confidence = 0.7)
+                x,y = pyg.locateCenterOnScreen(VictoryDirectory, confidence = 0.5)
                 click(x,y)
-                print("Putaran ke", repeat+1, "sudah selsai.")
+                print("Putaran ke", repeat[0]+1, "sudah selsai.")
                 #17. Klik sekali, klik 2 kali
                 tungguGlobal()
                 click(960,540)
