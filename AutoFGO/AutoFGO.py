@@ -63,14 +63,10 @@ def turun(y):
     pyg.click(1751,y+72)
 
 #Menu mulai
-
 diam = False
 stamina = 0
-repeat = 0
 ulang = int(input("Jumlah repeat farming: "))
 stamina = int(input("Jumlah AP Saat ini: "))
-
-
 
 #(Duluan):
 #Tanya ke user udh masuk ke menu support atau belum, kalau belum mulai dari sini, kalau udah langsung ke code bawah
@@ -116,17 +112,26 @@ def menuFGO(DirectoryIni):
         click(1344,333)
 
 #Main Farming Loop
-def mainLoop(repeat,ulang,DirectoryIni):
+def mainLoop(repeat,ulang,DirectoryIni,stamina):
     #variabel local dari slider pas milih waver
     slider = 338
-    while repeat != ulang:
+    MageDirectory = DirectoryIni[0] + '\\Mage.jpg'
+    Waver2Directory = DirectoryIni[0] + '\\Waver2.jpg'
+    Waver1Directory = DirectoryIni[0] + '\\Waver1.jpg'
+    UtamaDirectory = DirectoryIni[0] + '\\Utama.jpg'
+    VictoryDirectory = DirectoryIni[0] + '\\Done.jpg'
+    SupportDirectory = DirectoryIni[0] + '\\Support.jpg'
+    jumlahUlangSaatIni = repeat[0]
+    jumlahInput = ulang[0]
+    staminaSaatIni = stamina[0]
+    #TapScreenDirectory = DirectoryIni[0] +'\\TapScreen.jpg'
+    while jumlahUlangSaatIni != jumlahInput or ulang == repeat:
         #balik ke window fgo
         print("Farming Dimulai")
         tungguGlobal()
         #tunggu loadignnya dulu :C
         tungguLoading(DirectoryIni)
         #klik icon mage
-        MageDirectory = DirectoryIni[0] + '\\Mage.jpg'
         while True:
             try:
                 m1,m2 = pyg.locateCenterOnScreen(MageDirectory, region=(0,0,1856,1920), confidence = 0.7)
@@ -140,7 +145,6 @@ def mainLoop(repeat,ulang,DirectoryIni):
                 pass
     #cari gambar zhuge liang/waver kalau gak ada skrol ke bawah (cek terus sampe bawah, kalo gak ada klik update list)
         pyg.moveTo(1751,338)
-        Waver2Directory = DirectoryIni[0] + '\\Waver2.jpg'
         while True:
             try:
                 #ngecek apakah ada waver di screenshot tersebut?
@@ -153,7 +157,6 @@ def mainLoop(repeat,ulang,DirectoryIni):
             except:
                 try:
                     tungguGlobal()
-                    Waver1Directory = DirectoryIni[0] + '\\Waver1.jpg'
                     cekWaver2X,cekWaver2Y = pyg.locateCenterOnScreen(Waver1Directory, region=(0,0,1856,1920), confidence = 0.8)
                     tungguGlobal()
                     click(cekWaver2X,cekWaver2Y)
@@ -170,12 +173,11 @@ def mainLoop(repeat,ulang,DirectoryIni):
                 pass
         slider = 72
         #klik start quest
-        if repeat[0] == 0:
+        if jumlahUlangSaatIni == 0:
             tungguGlobal()
             click(1621,998)
         #ngecek apakah dia udah di battle screen, jika udh lakuin hal berikut:
         tungguGlobal()
-        UtamaDirectory = DirectoryIni[0] + '\\Utama.jpg'
         while True:
             try:
                 s1,s2 = pyg.locateCenterOnScreen(UtamaDirectory, region=(0,0,1856,1920), confidence = 0.9)
@@ -292,21 +294,13 @@ def mainLoop(repeat,ulang,DirectoryIni):
         #15. klik random 1 - 5
         tungguGlobal()
         pilihkartu()
-        tungguGlobal()
-        click(960,540)
-        tungguGlobal()
-        click(960,540)
-        tungguGlobal()
-        click(960,540)
-        tungguGlobal()
-        click(960,540)
         #16. tunggu np sampe selesai
-        VictoryDirectory = DirectoryIni[0] + '\\Done.jpg'
         while True:
             try:
-                x,y = pyg.locateCenterOnScreen(VictoryDirectory, confidence = 0.5)
+                x,y = pyg.locateCenterOnScreen(VictoryDirectory, region=(0,0,1856,1920), confidence = 0.5)
                 click(x,y)
-                print("Putaran ke", repeat[0]+1, "sudah selsai.")
+                print("aman")
+                print("Putaran ke", jumlahUlangSaatIni+1, "sudah selsai.")
                 #17. Klik sekali, klik 2 kali
                 tungguGlobal()
                 click(960,540)
@@ -321,12 +315,11 @@ def mainLoop(repeat,ulang,DirectoryIni):
             except:
                 print("Masih np")
                 pass
-    #19. repeat++
-        repeat[0] = repeat[0] + 1
-    #19.5 stamina ngurang 40 poin
-        stamina = stamina - 40
-    ## Jika supportnya bukan friend
-        SupportDirectory = DirectoryIni[0] + '\\Support.jpg'
+        #19. repeat++
+        jumlahUlangSaatIni =+ 1
+        #19.5 stamina ngurang 40 poin
+        staminaSaatIni = staminaSaatIni - 40
+        ## Jika supportnya bukan friend
         while True:
             try:
                 #ngecek apakah dia friend atau bukan
@@ -335,7 +328,7 @@ def mainLoop(repeat,ulang,DirectoryIni):
                 tungguGlobal()
                 #klik repeat
                 click(1165,852)
-                if stamina < 40:
+                if staminaSaatIni < 40:
                     #21. Klik Golden Fruit
                     tungguGlobal()
                     click(545,500)
@@ -345,11 +338,11 @@ def mainLoop(repeat,ulang,DirectoryIni):
                 break
             except:
                 #20. Klik Repeat
-                if repeat[0] != ulang[0]:
+                if jumlahUlangSaatIni != jumlahInput:
                     tungguGlobal()
                     click(1168,846)
                 ## jika kehabisan stamina:
-                if stamina < 40 and repeat[0] != ulang[0]:
+                if staminaSaatIni < 40 and jumlahUlangSaatIni != jumlahInput:
                     tungguGlobal()
                     #21. Klik Golden Fruit
                     click(1166,497)
@@ -357,11 +350,14 @@ def mainLoop(repeat,ulang,DirectoryIni):
                     tungguGlobal()
                     click(1134,835)
                 break
+        #Kalo udah selesai return inputnyah
+        repeat = jumlahUlangSaatIni
+        ulang = jumlahInput
 
-def mulaiMainLoop():
-    threading.Thread(target= mainLoop, daemon = True, args = ((repeat,),(ulang,),(DirectoryIni,))).start()
+def mulaiMainLoop(repeat,ulang):
+    threading.Thread(target= mainLoop, daemon = True, args = ((repeat,),(ulang,),(DirectoryIni,),(stamina,))).start()
 
-def berhenti():
+def berhenti(repeat,ulang):
     print("Pencet key z kalau error atau udah selesai")
     while True:
         if key.is_pressed('z'):
